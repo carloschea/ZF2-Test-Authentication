@@ -1,0 +1,43 @@
+<h2><?php echo $this->translate("Editar Nivel"); ?></h2>
+<?php
+$form = $this->form;
+
+if ($this->success) {
+    echo'<div class="alert alert-success">' . $this->translate($this->success[0]) . '<button type="button" class="close" data-dismiss="alert">x</button></div>';
+}
+if ($this->error) {
+    echo'<div class="alert alert-danger">' . $this->translate($this->error[0]) . '<button type="button" class="close" data-dismiss="alert">x</button></div>';
+}
+
+$this->formElementErrors()
+        ->setMessageOpenFormat('<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert">x</button>')
+        ->setMessageCloseString('</div>')
+        ->render($form);
+
+$form->setAttribute('action', $this->url('nivel/default', array('controller' => 'nivel', 'action' => 'editar', 'id' => $this->id)));
+
+$form->prepare();
+echo $this->form()->openTag($form);
+echo '<div class="form-block">';
+echo '<div class="container">';
+//echo $this->formHidden($form->get('id'));
+echo '<div class="form-group">';
+echo $this->formRow($form->get('nome'));
+echo '</div>';
+echo '<div class="form-group">';
+echo $this->formRow($form->get('submit'));
+echo '</div>';
+echo '</div>';
+echo '</div>';
+echo $this->form()->closeTag();
+
+/*
+  //ou
+  echo $this->form()->openTag($form);
+  echo $this->formCollection($form);
+  echo $this->form()->closeTag();
+ */
+
+echo '<br>';
+echo '<br>';
+echo '<a class="btn btn-success" href="' . $this->url('nivel/default', array('controller' => 'nivel')) . '">' . $this->translate("Lista") . '</a>';

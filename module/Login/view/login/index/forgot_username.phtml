@@ -1,0 +1,53 @@
+<h2><?php echo $this->translate("Esqueceu seu nome de usuário?"); ?></h2>
+<?php
+$form = $this->form;
+
+
+if ($this->success) {
+    echo'<div class="alert alert-success">' . $this->translate($this->success[0]) . '<button type="button" class="close" data-dismiss="alert">x</button></div>';
+}
+if ($this->error) {
+    echo'<div class="alert alert-danger">' . $this->translate($this->error[0]) . '<button type="button" class="close" data-dismiss="alert">x</button></div>';
+}
+
+
+$this->formElementErrors()
+        ->setMessageOpenFormat('<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert">x</button>')
+        ->setMessageCloseString('</div>')
+        ->render($form);
+
+$form->setAttribute('action', $this->url('conta-login/default', array('controller' => 'conta-login', 'action' => 'forgot_username')));
+
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo '<div class="form-block">';
+echo '<div class="container">';
+//echo $this->formHidden($form->get('id'));
+echo '<p>';
+echo $this->translate(""
+        . "O sistema irá enviar-lhe um e-mail com o nome de usuário (s) relacionado com o seu endereço de e-mail.");
+echo '</p>';
+echo '<div class="form-group">';
+echo $this->formRow($form->get('email'));
+echo '</div>';
+
+
+echo '<div class="form-group">';
+echo $this->formRow($form->get('submit'));
+echo '</div>';
+echo '</div>';
+echo '</div>';
+echo '<a class="" href="'.$this->url('conta-login/default', array('controller' => 'conta-login', 'action' => 'reset_password')).'">'.$this->translate("Esqueceu a sua senha?").'</a>';
+
+echo $this->form()->closeTag();
+
+/*
+  //ou
+  echo $this->form()->openTag($form);
+  echo $this->formCollection($form);
+  echo $this->form()->closeTag();
+ */
+
+echo '<br>';
+echo '<br>';

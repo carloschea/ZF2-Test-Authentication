@@ -1,0 +1,67 @@
+<?php
+
+namespace Usuario\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Usuario
+ *
+ * @ORM\Table(name="usuario", indexes={@ORM\Index(name="FK_USUARIO_LOGIN", columns={"login_id"}), @ORM\Index(name="FK_USUARIO_NIVEL", columns={"nivel_id"})})
+ * @ORM\Entity
+ */
+class Usuario
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nome", type="string", length=45, nullable=false)
+     */
+    private $nome;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=45, nullable=false)
+     */
+    private $email;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="status", type="boolean", nullable=false)
+     */
+    private $status;
+
+    /**
+     * @var \Login\Entity\Login
+     *
+     * @ORM\ManyToOne(targetEntity="Login\Entity\Login")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="login_id", referencedColumnName="id")
+     * })
+     */
+    private $login;
+
+    /**
+     * @var \Nivel\Entity\Nivel
+     *
+     * @ORM\ManyToOne(targetEntity="Nivel\Entity\Nivel")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="nivel_id", referencedColumnName="id")
+     * })
+     */
+    private $nivel;
+
+
+}
+

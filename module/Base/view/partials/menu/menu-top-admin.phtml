@@ -1,0 +1,39 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img src="<?php echo $this->basePath('img/zf2-logo.png') ?>" alt="Zend Framework 2"/>&nbsp;<?php echo 'Skeleton Application' ?></a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="<?php echo $this->url('home') ?>">Home</a></li>
+                <li><a href="<?php echo $this->url('categoria/default', array('controller' => 'categoria')) ?>">Categoria</a></li>
+                <li><a href="<?php echo $this->url('post/default', array('controller' => 'post')) ?>">Post</a></li>
+                <li><a href="<?php echo $this->url('usuario/default', array('controller' => 'usuario')) ?>">Usuario</a></li>
+                <li><a href="<?php echo $this->url('nivel/default', array('controller' => 'nivel')) ?>">Nivel</a></li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> <?php echo $this->identity()->getLogin(); ?>  <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">Nivel: Admin</li>
+
+                        <li class="divider"></li>
+                        <li><a href="<?php echo $this->url('auth/default', array('controller' => 'auth', 'action' => 'logout')) ?>"><?php echo $this->translate('Logout')?></a></li>
+
+                    </ul>
+                </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<!--class="active"-->
+<?php //var_dump($this->identity());die; ?>
+<?php //echo $this->identity()->getNome(); ?>
+<?php //echo $this->identity()->getLogin(); ?>
+<?php //echo $this->identity()->getNivel(); ?>
+<?php //echo $this->escapeHtml($this->nome) ?>
+<?php //echo $this->escapeHtml($this->email) ?>

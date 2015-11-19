@@ -1,0 +1,80 @@
+<?php
+if ($this->success) {
+    echo '<div class="alert alert-success">' . $this->translate($this->success[0]) . '<button type="button" class="close" data-dismiss="alert">x</button></div>';
+}
+
+if ($this->error) {
+    echo '<div class="alert alert-danger">' . $this->translate($this->error[0]) . '<button type="button" class="close" data-dismiss="alert">x</button></div>';
+}
+
+if ($this->warning) {
+    echo '<div class="alert alert-warning">' . $this->translate($this->warning[0]) . '<button type="button" class="close" data-dismiss="alert">x</button></div>';
+}
+?>
+
+<a class="btn btn-success" href="<?php echo $this->url('post/default', array('controller' => 'post', 'action' => 'inserir')); ?>"><?php echo $this->translate("Cadastrar"); ?></a>
+<br>
+<table class="table table-bordered table-striped table-hover table-condensed">
+    <caption class="text-center"><?php echo $this->translate("Todas os posts"); ?></caption>
+    <thead>
+        <tr>
+            <th class="text-uppercase"><?php echo $this->translate("Id"); ?></th>
+            <th class="text-uppercase"><?php echo $this->translate("Titulo"); ?></th>
+            <th class="text-uppercase"><?php echo $this->translate("Descricao"); ?></th>
+            <th class="text-uppercase"><?php echo $this->translate("Categoria"); ?></th>
+            <th class="text-uppercase"><?php echo $this->translate("Cadastro"); ?></th>
+            <th class="text-uppercase"><?php echo $this->translate("Alterado"); ?></th>
+            <th class="text-uppercase"><?php echo $this->translate("Ativo"); ?></th>
+            <th class="text-uppercase"><?php echo $this->translate("Acao"); ?></th>
+        </tr>
+
+    </thead>
+    <tbody>
+        <?php
+        /*
+         * @var $entity \Post\Entity\Post
+         */
+        ?>
+        <?php
+        if ($this->data):
+            ?>
+
+            <?php
+            foreach ($this->data as $entity):
+                ?>
+
+
+                <tr>
+                    <td><?php echo $entity->getId(); ?></td>
+                    <td><?php echo $entity->getTitulo(); ?></td>
+                    <td><?php echo $entity->getDescricao(); ?></td>
+                    <td><?php echo $entity->getCategory()->getNome(); ?></td>
+                    <td><?php echo $entity->getCadastro()->format('d/m/Y'); ?></td>
+                    <td><?php echo ($entity->getAlterado()) ? $entity->getAlterado()->format('d/m/Y') : '---'; ?></td>
+                    <td><?php echo ($entity->getAtivo()) ? $this->translate("sim") : $this->translate("nao"); ?></td>
+                    <td>
+                        <a href="<?php echo $this->url('post/default', array('controller' => 'post', 'action' => 'editar', 'id' => $entity->getId())); ?>" title="<?php echo $this->translate("Editar"); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a href="<?php echo $this->url('post/default', array('controller' => 'post', 'action' => 'excluir', 'id' => $entity->getId())); ?>" title="<?php echo $this->translate("Excluir"); ?>"><i class="glyphicon glyphicon-trash"></i></a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+
+        <?php else: ?>
+
+            <tr>
+                <td colspan="8"><?php echo $this->translate("Nao foi encontrado nenhum resultado"); ?></td>
+            </tr>
+
+        <?php
+        endif;
+        ?>
+
+    </tbody>
+
+
+
+</table>
+
+
+
+<?php echo $this->paginationControl($this->data, 'Sliding', 'partials/paginator', array('router' => 'post/paginator')); ?>

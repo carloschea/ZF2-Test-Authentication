@@ -1,0 +1,49 @@
+<?php
+$urlPattern = $_SERVER['REQUEST_URI'];
+$formatUrl = function($page)use($urlPattern) {
+    if (!preg_match('/page/', $urlPattern)) {
+        return $urlPattern . '/page/' . (int) $page;
+    } else {
+        return preg_replace('@/page/(\d+)@', '/page/' . (int) $page, $urlPattern);
+    }
+};
+?>
+<?php
+if ($this->pageCount > 1):
+    ?>
+    <div class="pagination pagination-centered page_nave">
+        <p>
+            <?php echo sprintf($this->translate('pagina %1$s de %2$s'), $this->current, $this->pageCount); ?>
+        </p>
+
+        <ul class="pagination">
+            <?php if (isset($this->previous)): ?>
+                <li><a href="<?php echo $formatUrl($this->previous); ?>" title="<?php echo $this->translate("ir para pagina anterior"); ?>"><?php echo $this->translate("Anterior"); ?></a></li>
+            <?php else: ?>
+                <li class="disabled"><a href="#" title="<?php echo $this->translate("ir para pagina anterior"); ?>" onclick="retun false;"><?php echo $this->translate("Anterior"); ?></a></li>
+            <?php endif; ?>
+
+            <?php foreach ($this->pagesInRange as $page): ?>
+                <?php if ($page != $this->current): ?>
+                    <li><a href="<?php echo $formatUrl($page); ?>" ><?php echo $page; ?></a></li>
+                <?php else: ?>
+                    <li class="active"><a href="#"  ><?php echo $page; ?></a></li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+
+            <?php if (isset($this->next)): ?>
+                <li><a href="<?php echo $formatUrl($this->next); ?>" title="<?php echo $this->translate("ir para proxima pagina"); ?>"><?php echo $this->translate("Proximo"); ?></a></li>
+            <?php else: ?>
+                <li class="disabled"><a href="#" title="<?php echo $this->translate("ir para proxima pagina"); ?>" onclick="retun false;"><?php echo $this->translate("Proximo"); ?></a></li>
+            <?php endif; ?>
+
+        </ul>
+    </div>
+<?php else: ?>
+    <div class="pagination pagination-centered page_nave">
+        <p>
+            <?php echo sprintf($this->translate('pagina %1$s de %2$s'), $this->current, $this->pageCount); ?>
+        </p>
+    </div>
+<?php endif; ?>
+
