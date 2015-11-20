@@ -13,20 +13,9 @@ use Zend\Authentication\AuthenticationService;
  */
 class IndexController extends AbstractActionController
 {
-    function __construct() {
-        $this->form = 'Auth\Form\UsuarioLoginForm';
-        $this->cotroller = 'auth';
-        $this->route = 'auth/default';
-    }
-
     public function loginAction()
     {
-        $this->form = $this->getServiceLocator()->get($this->form);
-        if (is_string($this->form)) {
-            $form = new $this->form;
-        } else {
-            $form = $this->form;
-        }
+        $form = $this->getServiceLocator()->get('Auth\Form\UsuarioLoginForm');
 
         if ($this->getRequest()->isPost()) {
             $form->setData($this->getRequest()->getPost()->toArray());
