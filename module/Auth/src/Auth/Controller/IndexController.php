@@ -2,7 +2,7 @@
 
 namespace Auth\Controller;
 
-use Base\Controller\AbstractController;
+use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Authentication\AuthenticationService;
 use Zend\Log\Logger;
@@ -13,7 +13,7 @@ use Zend\Log\Writer\Stream;
  *
  * @author Rick
  */
-class IndexController extends AbstractController {
+class IndexController extends AbstractActionController {
 
     //protected $champralliesTable;
     //protected $formEdit;
@@ -53,11 +53,10 @@ class IndexController extends AbstractController {
                 }
                 $mensagem = $auth->authenticate()->getMessages();
                 $this->flashMessenger()->addErrorMessage($mensagem[0]);
-                //return $this->redirect()
-                //              ->toRoute($this->route, array('controller' => $this->controller,'form' => $data));
-                $viewModel = new ViewModel(array('form' => $form));
-
-                return $viewModel;
+                return $this->redirect()
+                              ->toRoute($this->route, array('controller' => $this->controller,'form' => $form));
+                //$viewModel = new ViewModel(array('form' => $form));
+                //return $viewModel;
             }
         }
 
