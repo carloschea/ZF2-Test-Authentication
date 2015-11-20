@@ -1,6 +1,4 @@
 <?php
-use Zend\Log\Logger;
-use Zend\Log\Writer\Stream;
 
 echo $this->flashMessenger()
         ->setMessageOpenFormat("<div %s>")
@@ -15,12 +13,6 @@ echo $this->flashMessenger()
         ->render('error', array('alert alert-danger'));
 
 $form = $this->form;
-
-//$logger = new Logger;
-//$writer = new Stream('./data/log/Logger.log');
-//$logger->addWriter($writer);
-
-//$logger->log(Logger::DEBUG, $data);
 
 $this->formElementErrors()
         ->setMessageOpenFormat('<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert">x</button>')

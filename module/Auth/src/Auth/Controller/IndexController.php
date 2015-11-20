@@ -5,34 +5,22 @@ namespace Auth\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Authentication\AuthenticationService;
-use Zend\Log\Logger;
-use Zend\Log\Writer\Stream;
 
 /**
  * Description of IndexController
  *
  * @author Rick
  */
-class IndexController extends AbstractActionController {
-
-    //protected $champralliesTable;
-    //protected $formEdit;
-    //protected $viewModel;
-
+class IndexController extends AbstractActionController
+{
     function __construct() {
         $this->form = 'Auth\Form\UsuarioLoginForm';
         $this->cotroller = 'auth';
         $this->route = 'auth/default';
     }
 
-    public function loginAction() {
-        $viewModel = new ViewModel();
-
-        //$logger = new Logger;
-        ///$writer = new Stream('./data/log/Logger.log');
-        //$logger->addWriter($writer);
-        //$logger->log(Logger::DEBUG, 'Informational message LOG');
-        //$logger->info('Informational message INFO');
+    public function loginAction()
+    {
         $this->form = $this->getServiceLocator()->get($this->form);
         if (is_string($this->form)) {
             $form = new $this->form;
@@ -47,22 +35,20 @@ class IndexController extends AbstractActionController {
                 $auth = $this->getServiceLocator()->get('Zend\Authentication\AuthenticationService');
                 $adapter = $auth->getAdapter();
                 $adapter->setLogin($data['login'])->setSenha($data['senha']);
+
                 if ($auth->authenticate()->isValid()) {
                     $this->flashMessenger()->addSuccessMessage('Login realizado com sucesso!');
                     return $this->redirect()->toRoute('home', array('controller' => 'home', 'action' => 'index'));
                 }
+
                 $mensagem = $auth->authenticate()->getMessages();
                 $this->flashMessenger()->addErrorMessage($mensagem[0]);
-                return $this->redirect()
-                              ->toRoute($this->route, array('controller' => $this->controller,'form' => $form));
-                //$viewModel = new ViewModel(array('form' => $form));
-                //return $viewModel;
+
+                return $this->redirect()->toRoute('auth/default', array('controller' => 'index', 'action' => 'login'));
             }
         }
 
-        $this->flashMessenger()->clearMessages();
-        $viewModel = new ViewModel(array('form' => $form));
-        return $viewModel;
+        return new ViewModel(array('form' => $form));
     }
 
     public function logoutAction() {
@@ -75,12 +61,4 @@ class IndexController extends AbstractActionController {
         //$this->_redirect('/user');
         return $this->redirect()->toRoute('home', array('controller' => 'home', 'action' => 'index'));
     }
-
-    public function getEm() {
-        if ($this->em == null) {
-            $this->em = $this->getServiceLocator()->get("Doctrine\ORM\EntityManager");
-        }
-        return $this->em;
-    }
-
 }
